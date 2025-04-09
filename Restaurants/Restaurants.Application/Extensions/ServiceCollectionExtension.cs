@@ -16,7 +16,8 @@ namespace Restaurants.Application.Extensions
         public static void AddApplication(this IServiceCollection services) {
 
             var assembly = typeof(ServiceCollectionExtension).Assembly;
-            services.AddScoped<IRestaurantsService, RestaurantsService>();
+            //services.AddScoped<IRestaurantsService, RestaurantsService>(); Cause we use CQRS Pattern MediatR
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
             services.AddAutoMapper(assembly);
             //Add service for FluentValidation
             services.AddValidatorsFromAssembly(assembly)
