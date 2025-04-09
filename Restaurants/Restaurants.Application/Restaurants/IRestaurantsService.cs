@@ -1,4 +1,5 @@
-﻿using Restaurants.Application.Restaurants.Dtos;
+﻿using Restaurants.Application.Restaurants;
+using Restaurants.Application.Restaurants.Dtos;
 using Restaurants.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,6 @@ namespace Restaurants.Domain.Repositories
     {
         Task<IEnumerable<RestaurantsDTO>> GetAllRestaurantsAsync();
         Task<RestaurantsDTO> GetRestaurantAsync(int id);
+        Task<int> CreateNewRestaurant(RestaurantRequest request);
     }
 }
