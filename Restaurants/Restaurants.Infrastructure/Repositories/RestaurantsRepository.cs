@@ -51,5 +51,8 @@ namespace Restaurants.Infrastructure.Repositories
 
             return restaurant;
         }
+
+        public Task SaveChangesAsync()
+            => _dbContext.SaveChangesAsync();
     }
 }
