@@ -13,7 +13,7 @@ namespace Restaurants.Application.Restaurants.Commands.DeleteRestaurant
         public async Task<bool> Handle(DeleteRestaurantByIdCommand request, CancellationToken cancellationToken)
         {
             var isDeleted = false;
-            logger.LogInformation($"Getting restaurant with id: {request.Id} form db");
+            logger.LogInformation("Getting restaurant with id: @{RestaurantId} form db", request.Id);
             var restaurant = await restaurantsRepository.GetRestaurantAsync(request.Id);
             if (restaurant != null) 
             {
