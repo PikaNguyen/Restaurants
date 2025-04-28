@@ -20,7 +20,7 @@ namespace Restaurants.Application.Dishes.Command
     {
         public async Task Handle(CreateDishCommand request, CancellationToken cancellationToken)
         {
-            var restaurant = await restaurantsRepository.GetRestaurantAsync(request.RestaurantId);
+            var restaurant = await restaurantsRepository.GetRestaurantByIdAsync(request.RestaurantId);
             var mapRequest = mapper.Map<Dish>(request);
             if (restaurant != null) {
                 var dish = await repositoryDish.CreateDishes(mapRequest);

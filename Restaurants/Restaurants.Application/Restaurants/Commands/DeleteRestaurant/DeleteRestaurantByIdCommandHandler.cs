@@ -14,7 +14,7 @@ namespace Restaurants.Application.Restaurants.Commands.DeleteRestaurant
         {
             var isDeleted = false;
             logger.LogInformation("Getting restaurant with id: @{RestaurantId} form db", request.Id);
-            var restaurant = await restaurantsRepository.GetRestaurantAsync(request.Id);
+            var restaurant = await restaurantsRepository.GetRestaurantByIdAsync(request.Id);
             if (restaurant != null) 
             {
                 logger.LogInformation($"Deleting restaurant with id: {request.Id} form db");

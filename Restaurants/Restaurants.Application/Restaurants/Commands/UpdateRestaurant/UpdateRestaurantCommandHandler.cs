@@ -16,7 +16,7 @@ namespace Restaurants.Application.Restaurants.Commands.UpdateRestaurant
             {
                 var isUpdate = false;
                 logger.LogInformation($"Getting restaurant with id: {request.Id} form db");
-                var restaurant = await restaurantsRepository.GetRestaurantAsync(request.Id);
+                var restaurant = await restaurantsRepository.GetRestaurantByIdAsync(request.Id);
                 if (restaurant != null)
                 {
                     logger.LogInformation($"Update restaurant with id: {request.Id} form db");
