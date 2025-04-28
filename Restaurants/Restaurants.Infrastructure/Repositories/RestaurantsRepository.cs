@@ -39,7 +39,7 @@ namespace Restaurants.Infrastructure.Repositories
             return restaurant;
         }
 
-        public async Task<Restaurant> GetRestaurantAsync(int id)
+        public async Task<Restaurant> GetRestaurantByIdAsync(int id)
         {
             var restaurant = await _dbContext.Restaurants
                 .Include(r => r.Dishes)
