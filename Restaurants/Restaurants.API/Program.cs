@@ -1,6 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Restaurants.API.Middlewares;
 using Restaurants.Application.Extensions;
+using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Extensions;
+using Restaurants.Infrastructure.Persistance;
 using Restaurants.Infrastructure.Seeders;
 using Serilog;
 using Serilog.Events;
@@ -17,6 +21,8 @@ builder.Services.AddScoped<RequestTimeLoggingMiddleware>();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddIdentityApiEndpoints<User>()
+            .AddEntityFrameworkStores<RestaurantDBContext>();
 builder.Host.UseSerilog((context, configuration) =>
 {
     configuration
@@ -43,6 +49,8 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapIdentityApi<User>();
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseMiddleware<RequestTimeLoggingMiddleware>();

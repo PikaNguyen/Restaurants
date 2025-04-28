@@ -23,7 +23,7 @@ namespace Restaurants.API.Controllers
             }
             catch(Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
             
         }

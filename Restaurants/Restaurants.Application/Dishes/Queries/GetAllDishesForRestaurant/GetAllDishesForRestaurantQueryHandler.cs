@@ -9,12 +9,12 @@ namespace Restaurants.Application.Dishes.Queries.GetAllDishesForRestaurant
     public class GetAllDishesForRestaurantQueryHandler(
         ILogger<GetAllDishesForRestaurantQueryHandler> logger,
         IMapper mapper,
-        IDishesRepository dishesRepository,
         IRestaurantsRepository restaurantsRepository
         ) : IRequestHandler<GetAllDishesForRestaurantQuery, IEnumerable<DishDTO>>
     {
         public async Task<IEnumerable<DishDTO>> Handle(GetAllDishesForRestaurantQuery request, CancellationToken cancellationToken)
         {
+            logger.LogInformation("Getting restaurant with id: @{RestaurantId} form db", request.RestaurantId);
             var rest = await restaurantsRepository.GetRestaurantByIdAsync(request.RestaurantId);
             if (rest != null)
             {
