@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
 using Restaurants.API.Middlewares;
 using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Persistance;
@@ -36,6 +37,7 @@ public static class WebApplicationBuilderExtension
         builder.Services.AddScoped<RequestTimeLoggingMiddleware>();
 
         builder.Services.AddIdentityApiEndpoints<User>()
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<RestaurantDBContext>();
         builder.Host.UseSerilog((context, configuration) =>
         {
