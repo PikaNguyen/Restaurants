@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
-namespace Restaurants.Application.User.Command
+namespace Restaurants.Application.User.Command.UpdateUserDetail
 {
     public class UpdateUserDetailHandler(ILogger<UpdateUserDetailHandler> logger,
         IUserContext userContext,
@@ -14,7 +14,8 @@ namespace Restaurants.Application.User.Command
             logger.LogInformation("Update user: {UserId} detail about Birth and Nationality with {@Request}", user!.Id, request);
 
             var dbUser = await userStore.FindByIdAsync(user!.Id, cancellationToken);
-            if (dbUser == null) {
+            if (dbUser == null)
+            {
                 logger.LogError("Cannot found user db with {UserId}", user!.Id);
                 throw new UnauthorizedAccessException();
             }
