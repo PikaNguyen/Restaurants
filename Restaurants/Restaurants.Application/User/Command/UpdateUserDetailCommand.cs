@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MediatR;
 
-namespace Restaurants.Domain.Entities
+namespace Restaurants.Application.User.Command
 {
-    public class User :IdentityUser
+    public class UpdateUserDetailCommand : IRequest
     {
         public DateOnly? DateOfBirth { get; set; }
         public string? Nationality { get; set; }
