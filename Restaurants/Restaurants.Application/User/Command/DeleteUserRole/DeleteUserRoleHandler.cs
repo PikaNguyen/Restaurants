@@ -28,6 +28,7 @@ namespace Restaurants.Application.User.Command.DeleteUserRole
                     logger.LogError("Error: AssignUserRoleCommand roleUser", request.UserEmail);
                     throw new ArgumentNullException();
                 }
+
                 await userManager.RemoveFromRoleAsync(user, roleUser.Name!);
             }
             catch (Exception ex)
