@@ -2,6 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Restaurants.API.Middlewares;
 using Restaurants.Domain.Entities;
+using Restaurants.Infrastructure.Authorization;
 using Restaurants.Infrastructure.Persistance;
 using Serilog;
 
@@ -38,6 +39,7 @@ public static class WebApplicationBuilderExtension
 
         builder.Services.AddIdentityApiEndpoints<User>()
             .AddRoles<IdentityRole>()
+            .AddClaimsPrincipalFactory<RestaurantsUserClaimsPrincipalFactory>()
             .AddEntityFrameworkStores<RestaurantDBContext>();
         builder.Host.UseSerilog((context, configuration) =>
         {
