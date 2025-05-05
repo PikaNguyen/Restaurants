@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using Restaurants.API.Middlewares;
 using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Authorization;
+using Restaurants.Infrastructure.Constants;
 using Restaurants.Infrastructure.Persistance;
 using Serilog;
 
@@ -39,8 +40,14 @@ public static class WebApplicationBuilderExtension
 
         builder.Services.AddIdentityApiEndpoints<User>()
             .AddRoles<IdentityRole>()
+            //Config custom user claims: More info nationality and dateOfBirth
             .AddClaimsPrincipalFactory<RestaurantsUserClaimsPrincipalFactory>()
             .AddEntityFrameworkStores<RestaurantDBContext>();
+
+        // Add policy to check User who defined nationality or not
+        builder.Services.AddAuthorizationBuilder()
+            .AddPolicy(ConstantAuthentication.HasNationality, builder => builder.RequireClaim(ConstantAuthentication.Nationality, "VietNamese"));
+
         builder.Host.UseSerilog((context, configuration) =>
         {
             configuration
