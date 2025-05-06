@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Restaurants.Domain.Entities
+﻿namespace Restaurants.Domain.Entities
 {
     public class Restaurant
     {
@@ -17,5 +11,7 @@ namespace Restaurants.Domain.Entities
         public string? ContactName { get; set; }
         public Address? Address { get; set; }
         public List<Dish> Dishes { get; set; } = new();
+        public User Owner { get; set; } = default!;
+        public string OwnerId { get; set; } = default!;
     }
 }
