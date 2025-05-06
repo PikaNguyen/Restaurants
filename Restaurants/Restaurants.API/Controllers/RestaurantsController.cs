@@ -24,6 +24,7 @@ namespace Restaurants.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize (Policy = ConstantAuthentication.AtLeast)]
         public async Task<IActionResult> GetRestaurant([FromRoute]int id)
         {
             var restaurant = await mediator.Send(new GetRestaurantByIdQuery(id));
@@ -35,6 +36,7 @@ namespace Restaurants.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = UserRoles.Owner)]
         public async Task<IActionResult> DeleteRestaurant([FromRoute] int id)
         {
             try
@@ -55,6 +57,7 @@ namespace Restaurants.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = UserRoles.Owner)]
         public async Task<IActionResult> UpdateRestaurant([FromBody]UpdateRestaurantCommand request)
         {
             try
