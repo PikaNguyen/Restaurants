@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using Restaurants.API.Middlewares;
 using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Authorization;
+using Restaurants.Infrastructure.Authorization.Requirements;
 using Restaurants.Infrastructure.Constants;
 using Restaurants.Infrastructure.Persistance;
 using Serilog;
@@ -46,7 +48,11 @@ public static class WebApplicationBuilderExtension
 
         // Add policy to check User who defined nationality or not
         builder.Services.AddAuthorizationBuilder()
-            .AddPolicy(ConstantAuthentication.HasNationality, builder => builder.RequireClaim(ConstantAuthentication.Nationality, "VietNamese"));
+            .AddPolicy(ConstantAuthentication.HasNationality, builder => builder.RequireClaim(ConstantAuthentication.Nationality, "VietNamese"))
+            .AddPolicy(ConstantAuthentication.AtLeast,
+            builder => builder.AddRequirements(new MinimumAgeRequirement(18)));
+
+        builder.Services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
 
         builder.Host.UseSerilog((context, configuration) =>
         {
