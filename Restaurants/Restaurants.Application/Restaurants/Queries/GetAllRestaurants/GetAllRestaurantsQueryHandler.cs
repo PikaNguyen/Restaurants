@@ -17,12 +17,22 @@ namespace Restaurants.Application.Restaurants.Queries.GetAllRestaurants
     {
         public async Task<IEnumerable<RestaurantsDTO>> Handle(GetAllRestaurantsQuery request, CancellationToken cancellationToken)
         {
+            var searchPhrase = request.SearchPhrase;
             logger.LogInformation("Getting all restaurants form db");
-            var restaurants = await restaurantsRepository.GetAllRestaurants();
-            //var restaurantsDTO = restaurants.Select(RestaurantsDTO.FromEntity).ToList();
-            var restaurantsDTO = mapper.Map<IEnumerable<RestaurantsDTO>>(restaurants);
+            if (searchPhrase != null)
+            {
+                var restaurants = await restaurantsRepository.GetAllMatchingRestaurantsAsync(searchPhrase);
+                var restaurantsDTO = mapper.Map<IEnumerable<RestaurantsDTO>>(restaurants);
 
-            return restaurantsDTO;
+                return restaurantsDTO;
+            }
+            else
+            {
+                var restaurants = await restaurantsRepository.GetAllRestaurantsAsync();
+                var restaurantsDTO = mapper.Map<IEnumerable<RestaurantsDTO>>(restaurants);
+
+                return restaurantsDTO;
+            }
         }
     }
 }

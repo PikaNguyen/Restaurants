@@ -16,10 +16,11 @@ namespace Restaurants.API.Controllers
     public class RestaurantsController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
-        [Authorize (Policy = ConstantAuthentication.Created2Restaurants)]
-        public async Task<IActionResult> GetAllRestaurant()
+        //[Authorize (Policy = ConstantAuthentication.Created2Restaurants)]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAllRestaurant([FromQuery] GetAllRestaurantsQuery query)
         {
-            var restaurants = await mediator.Send(new GetAllRestaurantsQuery());
+            var restaurants = await mediator.Send(query);   
             return Ok(restaurants);
         }
 
