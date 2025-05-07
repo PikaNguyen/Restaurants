@@ -50,9 +50,12 @@ public static class WebApplicationBuilderExtension
         builder.Services.AddAuthorizationBuilder()
             .AddPolicy(ConstantAuthentication.HasNationality, builder => builder.RequireClaim(ConstantAuthentication.Nationality, "VietNamese"))
             .AddPolicy(ConstantAuthentication.AtLeast,
-            builder => builder.AddRequirements(new MinimumAgeRequirement(18)));
+            builder => builder.AddRequirements(new MinimumAgeRequirement(18)))
+            .AddPolicy(ConstantAuthentication.Created2Restaurants,
+            builder => builder.AddRequirements(new CreatedMultipleRestaurantsRequirement(2)));
 
         builder.Services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
+        builder.Services.AddScoped<IAuthorizationHandler, CreatedMultipleRestaurantsRequirementHandler>();
 
         builder.Host.UseSerilog((context, configuration) =>
         {

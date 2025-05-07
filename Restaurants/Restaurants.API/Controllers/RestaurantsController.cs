@@ -16,7 +16,7 @@ namespace Restaurants.API.Controllers
     public class RestaurantsController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
-        [Authorize (Policy = ConstantAuthentication.HasNationality)]
+        [Authorize (Policy = ConstantAuthentication.Created2Restaurants)]
         public async Task<IActionResult> GetAllRestaurant()
         {
             var restaurants = await mediator.Send(new GetAllRestaurantsQuery());
@@ -24,7 +24,7 @@ namespace Restaurants.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize (Policy = ConstantAuthentication.AtLeast)]
+        [Authorize (Policy = ConstantAuthentication.HasNationality)]
         public async Task<IActionResult> GetRestaurant([FromRoute]int id)
         {
             var restaurant = await mediator.Send(new GetRestaurantByIdQuery(id));
