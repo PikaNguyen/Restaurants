@@ -42,10 +42,10 @@ namespace Restaurants.Infrastructure.Repositories
 
         public async Task<(IEnumerable<Restaurant>, int)> GetAllMatchingRestaurantsAsync(string searchPhrase, int pageSize, int pageNumber)
         {
-            var searchPhraseLower = searchPhrase.ToLower();
+            var searchPhraseLower = searchPhrase?.ToLower();
             var query = _dbContext.Restaurants
-                .Where(r => r.Name.ToLower().Contains(searchPhraseLower)
-                || r.Description.ToLower().Contains(searchPhraseLower));
+                .Where(r => searchPhraseLower == null   || (r.Name.ToLower().Contains(searchPhraseLower)
+                                                        || r.Description.ToLower().Contains(searchPhraseLower)));
 
             var totalCount = await query.CountAsync();
 

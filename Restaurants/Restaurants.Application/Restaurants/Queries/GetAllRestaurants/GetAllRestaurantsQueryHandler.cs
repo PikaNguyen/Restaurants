@@ -16,7 +16,7 @@ namespace Restaurants.Application.Restaurants.Queries.GetAllRestaurants
         {
             var searchPhrase = request.SearchPhrase;
             logger.LogInformation("Getting all restaurants form db");
-            if (searchPhrase != null)
+            if (searchPhrase != null || request.PageSize != 0 || request.PageNumber !=0)
             {
                 var (restaurants, total) = await restaurantsRepository.GetAllMatchingRestaurantsAsync(searchPhrase, request.PageSize, request.PageNumber);
                 var restaurantsDTO = mapper.Map<IEnumerable<RestaurantsDTO>>(restaurants);
