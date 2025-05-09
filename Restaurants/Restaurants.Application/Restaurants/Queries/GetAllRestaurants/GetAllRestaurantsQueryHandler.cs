@@ -8,10 +8,26 @@ using Restaurants.Domain.Repositories;
 
 namespace Restaurants.Application.Restaurants.Queries.GetAllRestaurants
 {
+    /// <summary>
+    /// Handler for retrieving all restaurants with optional filtering and pagination
+    /// </summary>
     public class GetAllRestaurantsQueryHandler(ILogger<GetAllRestaurantsQueryHandler> logger,
         IMapper mapper,
         IRestaurantsRepository restaurantsRepository) : IRequestHandler<GetAllRestaurantsQuery, PagedResult<RestaurantsDTO>>
     {
+        /// <summary>
+        /// Handles the retrieval of all restaurants
+        /// </summary>
+        /// <param name="request">The query containing optional search and pagination parameters</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>A paged result containing the matching restaurants</returns>
+        /// <remarks>
+        /// This method:
+        /// 1. If search parameters are provided, retrieves filtered and paginated results
+        /// 2. Otherwise, retrieves all restaurants
+        /// 3. Maps the results to DTOs
+        /// 4. Returns a paged result containing the restaurants and total count
+        /// </remarks>
         public async Task<PagedResult<RestaurantsDTO>> Handle(GetAllRestaurantsQuery request, CancellationToken cancellationToken)
         {
             var searchPhrase = request.SearchPhrase;

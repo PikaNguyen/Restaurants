@@ -8,12 +8,29 @@ using Restaurants.Infrastructure.Authorization;
 
 namespace Restaurants.Application.Restaurants.Commands.UpdateRestaurant
 {
+    /// <summary>
+    /// Handler for updating an existing restaurant
+    /// </summary>
     public class UpdateRestaurantCommandHandler(
         ILogger<UpdateRestaurantCommandHandler> logger,
         IMapper mapper,
         IRestaurantAuthorizeService restaurantAuthorizeService,
         IRestaurantsRepository restaurantsRepository) : IRequestHandler<UpdateRestaurantCommand, bool>
     {
+        /// <summary>
+        /// Handles the update of an existing restaurant
+        /// </summary>
+        /// <param name="request">The command containing restaurant update details</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>True if the update was successful, false otherwise</returns>
+        /// <remarks>
+        /// This method:
+        /// 1. Retrieves the restaurant from the repository
+        /// 2. Checks if the current user is authorized to update the restaurant
+        /// 3. Maps the update command to the restaurant entity
+        /// 4. Saves the changes to the repository
+        /// </remarks>
+        /// <exception cref="ForbidException">Thrown when the user is not authorized to update the restaurant</exception>
         public async Task<bool> Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
         {
             try
@@ -44,7 +61,6 @@ namespace Restaurants.Application.Restaurants.Commands.UpdateRestaurant
                 logger.LogError($"Error: {ex.ToString()}");
                 return false;
             }
-           
         }
     }
 }

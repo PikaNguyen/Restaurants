@@ -7,11 +7,28 @@ using Restaurants.Infrastructure.Authorization;
 
 namespace Restaurants.Application.Dishes.Command.DeleteDish
 {
+    /// <summary>
+    /// Handler for deleting a dish from a restaurant
+    /// </summary>
     public class DeleteDishHandler (ILogger<DeleteDishHandler> logger,
         IRestaurantsRepository restaurantsRepository,
         IRestaurantAuthorizeService restaurantAuthorizeService,
         IDishesRepository dishesRepository) : IRequestHandler<DeleteDishCommand, bool>
     {
+        /// <summary>
+        /// Handles the deletion of a dish from a restaurant
+        /// </summary>
+        /// <param name="request">The command containing the dish and restaurant IDs</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>True if the deletion was successful, false otherwise</returns>
+        /// <remarks>
+        /// This method:
+        /// 1. Retrieves the restaurant and dish from the repository
+        /// 2. Checks if the current user is authorized to delete the dish
+        /// 3. Deletes the dish from the repository
+        /// </remarks>
+        /// <exception cref="ForbidException">Thrown when the user is not authorized to delete the dish</exception>
+        /// <exception cref="NotFoundException">Thrown when the restaurant or dish is not found</exception>
         public async Task<bool> Handle(DeleteDishCommand request, CancellationToken cancellationToken)
         {
             var isDeleted = false;

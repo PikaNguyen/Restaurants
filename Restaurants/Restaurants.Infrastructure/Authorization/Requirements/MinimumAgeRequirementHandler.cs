@@ -4,15 +4,25 @@ using Restaurants.Application.User;
 
 namespace Restaurants.Infrastructure.Authorization.Requirements;
 
+/// <summary>
+/// Handles the minimum age requirement for authorization.
+/// </summary>
+/// <param name="logger">Logger instance for logging authorization events</param>
+/// <param name="userContext">User context to access current user information</param>
 public class MinimumAgeRequirementHandler(ILogger<MinimumAgeRequirementHandler> logger,
     IUserContext userContext) : AuthorizationHandler<MinimumAgeRequirement>
 {
     /// <summary>
-    /// Check requirement aboyt user's claims DateOfBirth 
+    /// Handles the minimum age requirement check for authorization.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="requirement">Minimum age requirement</param>
-    /// <returns></returns>
+    /// <param name="context">The authorization context containing the user and resource information</param>
+    /// <param name="requirement">The minimum age requirement to be checked</param>
+    /// <returns>A task representing the asynchronous operation</returns>
+    /// <remarks>
+    /// This method checks if the current user meets the minimum age requirement by:
+    /// 1. Verifying the user has a valid date of birth
+    /// 2. Calculating if the user's age meets or exceeds the minimum age requirement
+    /// </remarks>
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, MinimumAgeRequirement requirement)
     {
         var currentUser = userContext.GetCurrentUser();
